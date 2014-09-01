@@ -1,0 +1,10 @@
+# Vim swap files
+*.swp
+*.swo
+
+# Vim temporary files
+*~
+
+# Haskell binary files
+*.o
+*.hi
