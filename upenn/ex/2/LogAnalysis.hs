@@ -17,3 +17,16 @@ parseMessage line = parseMessageCore $ words line
 parse :: String -> [LogMessage]
 
 parse = map parseMessage . lines 
+
+insert :: LogMessage -> MessageTree -> MessageTree
+
+insert (Unknown _) tree = tree
+
+insert message Leaf = Node Leaf message Leaf 
+
+insert message (Node left value right) 
+    | message `isSameOrNewer` value = Node left value (insert message right)
+    | otherwise = Node (insert message left) value right
+    where
+        isSameOrNewer (LogMessage _ ts1 _) (LogMessage _ ts2 _) = ts1 >= ts2 
+        isSameOrNewer _ _ = True
