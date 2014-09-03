@@ -11,7 +11,7 @@ parseMessage line = parseMessageCore $ words line
         parseMessageCore ("E":severity:timestamp:rest) = constructMessage (Error $ read severity) timestamp rest
         parseMessageCore ("I":timestamp:rest) = constructMessage Info timestamp rest
         parseMessageCore ("W":timestamp:rest) = constructMessage Warning timestamp rest
-        parseMessageCore messageWords = error $ "Invalid message line: " ++ (unwords messageWords)
+        parseMessageCore messageWords = Unknown $ unwords messageWords 
         constructMessage messageType timestampString messageWords = LogMessage messageType (read timestampString) (unwords messageWords)
 
 parse :: String -> [LogMessage]
