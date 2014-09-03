@@ -16,4 +16,4 @@ parseMessage line = parseMessageCore $ words line
 
 parse :: String -> [LogMessage]
 
-parse logFile = map parseMessage (lines logFile)
+parse = map parseMessage . lines 
