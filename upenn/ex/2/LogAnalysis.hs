@@ -40,3 +40,12 @@ inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
 
 inOrder (Node left value right) = (inOrder left) ++ [value] ++ (inOrder right)
+
+whatWentWrong :: [LogMessage] -> [String]
+
+whatWentWrong messages = map getMessage (inOrder $ build $ filter isImportant messages)
+    where
+        getMessage (LogMessage _ _ m) = m
+        getMessage (Unknown m) = m
+        isImportant (LogMessage (Error severity) _ _) = severity > 50
+        isImportant _= False 
