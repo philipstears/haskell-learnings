@@ -43,7 +43,7 @@ inOrder (Node left value right) = (inOrder left) ++ [value] ++ (inOrder right)
 
 whatWentWrong :: [LogMessage] -> [String]
 
-whatWentWrong messages = map getMessage (inOrder $ build $ filter isImportant messages)
+whatWentWrong = map getMessage . inOrder . build . filter isImportant 
     where
         getMessage (LogMessage _ _ m) = m
         getMessage (Unknown m) = m
