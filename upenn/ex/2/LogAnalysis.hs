@@ -30,3 +30,13 @@ insert message (Node left value right)
     where
         isSameOrNewer (LogMessage _ ts1 _) (LogMessage _ ts2 _) = ts1 >= ts2 
         isSameOrNewer _ _ = True
+
+build :: [LogMessage] -> MessageTree
+
+build = foldr insert Leaf
+
+inOrder :: MessageTree -> [LogMessage]
+
+inOrder Leaf = []
+
+inOrder (Node left value right) = (inOrder left) ++ [value] ++ (inOrder right)
