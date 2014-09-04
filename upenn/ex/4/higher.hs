@@ -19,3 +19,23 @@ fun2' = sum . filter even . takeWhile (>1) . iterate hailstorm
 
 hailstorm n | even n = n `div` 2
             | otherwise = 3 * n + 1
+
+data Tree a = Leaf
+            | Node Integer (Tree a) a (Tree a)
+     deriving (Show, Eq)
+
+foldTree :: (Ord a) => [a] -> Tree a
+
+foldTree = foldr addValueToTree Leaf
+
+addValueToTree value Leaf = makeNode value Leaf Leaf
+
+addValueToTree value (Node h l v r)
+    | value >= v = makeNode v l (addValueToTree value r)
+    | otherwise  = makeNode v (addValueToTree value l) r
+
+height Leaf = 0
+
+height (Node h _ _ _) = h
+
+makeNode value left right = Node (1 + max (height left) (height right)) left value right
