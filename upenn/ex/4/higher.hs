@@ -53,3 +53,10 @@ rotateRight (Node _ (Node _ pL pV pR) rV rR) =
             let newRootLeft = pL
                 newRootRight = makeNode rV pR rR
             in  makeNode pV newRootLeft newRootRight
+
+balance node@(Node _ (Node lH _ _ _) (Node rH _ _ _))
+    | isUnbalanced lh rH = rebalance node
+    | otherwise = node
+    where isUnbalanced lH rH = (abs (lH - rH)) > 1
+          rebalance (Node _ (Node lH lL lV lR) (Node rH rL rV rR)) =
+            
