@@ -39,3 +39,17 @@ height Leaf = 0
 height (Node h _ _ _) = h
 
 makeNode value left right = Node (1 + max (height left) (height right)) left value right
+
+-- incoming node is the root node, pivot node is its
+-- right subtree (because this is a left rotation)
+rotateLeft (Node _ rL rV (Node _ pL pV pR)) =
+            let newRootLeft = makeNode rV rL pL
+                newRootRight = pR
+            in  makeNode pV newRootLeft newRootRight
+
+-- incoming node is the root node, pivot node is its
+-- left subtree (because this is a right rotation)
+rotateRight (Node _ (Node _ pL pV pR) rV rR) =
+            let newRootLeft = pL
+                newRootRight = makeNode rV pR rR
+            in  makeNode pV newRootLeft newRootRight
